@@ -1,0 +1,48 @@
+{
+  "name": "arcadian",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GudingStar/NFT-frontend.git"
+  },
+  "author": "AshaiSuzuki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GudingStar/NFT-frontend/issues"
+  },
+  "homepage": "https://github.com/GudingStar/NFT-frontend#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "config": "^3.3.8",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "ethers": "^5.7.1",
+    "express": "^4.18.1",
+    "express-fileupload": "^1.4.0",
+    "express-validator": "^6.14.2",
+    "http": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "mongoose": "^6.6.0",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.0",
+    "playfab-sdk": "^2.112.221010",
+    "speakeasy": "^2.0.0",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "devServer": {
+    "compress": true,
+    "public": "store-client-nestroia1.c9users.io"
+  }
+}

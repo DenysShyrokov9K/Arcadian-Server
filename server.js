@@ -29,20 +29,20 @@ app.use("/api/transaction", require("./routes/api/transaction"));
 app.use("/api/playfabId", require("./routes/api/playfabId"));
 
 // Serve Static assets in production
-// if (process.env.NODE_ENV === "production") {
-//   // Set Static Folder
-//   app.use(express.static(__dirname + "/build"));
-//   app.get("/*", function (req, res) {
-//     res.sendFile(__dirname + "/build/index.html", function (err) {
-//       if (err) {
-//         res.status(500).send(err);
-//       }
-//     });
-//   });
-// }
+if (process.env.NODE_ENV === "production") {
+  // Set Static Folder
+  app.use(express.static(__dirname + "/build"));
+  app.get("/*", function (req, res) {
+    res.sendFile(__dirname + "/build/index.html", function (err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    });
+  });
+}
 
 // SERVER
-// const PORT = process.env.PORT || 5000;
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+// const PORT = 5000;
 
 app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));

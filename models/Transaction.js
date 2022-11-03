@@ -30,6 +30,14 @@ const TransactionSchema = new Schema({
         type: Number,
         required: true
     },
+    progress: {
+        type: String,
+        required: true
+    },
+    display: {
+        type: Number,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now,

@@ -25,22 +25,85 @@ router.post("/", (req,res) => {
 // @access  Public
 router.post("/findResults",async (req,res) => {
     try{
-        //console.log(req.body);
         const {net,userAddress,transferType,selectedGame,selectedToken,selectedSort} = req.body;
         let users; 
         if(selectedToken === "allTokens"){
             if(selectedSort === "latest")
-                users = await Transaction.find({net:net,userAddress: userAddress,game: selectedGame,transferType : transferType}).sort({date: -1});
-            else users = await Transaction.find({net:net,userAddress: userAddress,game: selectedGame,transferType : transferType}).sort({date: 1});
+                users = await Transaction.find({net:net,userAddress: userAddress,game: selectedGame,transferType : transferType, progress: "success", display: 1}).sort({date: -1});
+            else users = await Transaction.find({net:net,userAddress: userAddress,game: selectedGame,transferType : transferType, progress: "success", display: 1}).sort({date: 1});
         }
         else {
             if(selectedSort === "latest")
-                users = await Transaction.find({net:net,userAddress: userAddress,game: selectedGame,transferType : transferType,symbol: selectedToken}).sort({date: -1});
-            else users = await Transaction.find({net:net,userAddress: userAddress,game: selectedGame,transferType : transferType,symbol: selectedToken}).sort({date: 1});
+                users = await Transaction.find({net:net,userAddress: userAddress,game: selectedGame,transferType : transferType,symbol: selectedToken, progress: "success", display: 1}).sort({date: -1});
+            else users = await Transaction.find({net:net,userAddress: userAddress,game: selectedGame,transferType : transferType,symbol: selectedToken, progress: "success", display: 1}).sort({date: 1});
         }
         res.json(users);
     }catch(err) {
         res.status(404).json("find error");
+    }
+})
+
+router.post("/getProgress",async (req,res) => {
+    try{
+        const {userAddress} = req.body;
+        let users;
+        users = await Transaction.find({userAddress: userAddress,transferType:"withdraw"});
+        res.json(users);
+    } catch(err) {
+        return res.status(404).json("fail");
+    }
+})
+
+router.post("/getDepositProgress",async (req,res) => {
+    try{
+        const {userAddress} = req.body;
+        let users;
+        users = await Transaction.find({userAddress: userAddress,transferType:"deposit"});
+        res.json(users);
+    } catch(err) {
+        return res.status(404).json("fail");
+    }
+})
+
+router.post("/setDepositProgress",async (req,res) => {
+    try{
+        const {userAddress} = req.body;
+        let users = await Transaction.find({userAddress: userAddress,transferType:"deposit"});
+        if(users.length > 0){
+            //console.log("setProgressUser = ",users)
+            for(i=0;i<users.length;i++){
+                users[i].display =1;
+                users[i].save();
+            }
+            // users.save();s
+            res.json("success");
+        } else {
+            console.log("nothing");
+            res.json("nothing");
+        }
+    } catch(err) {
+        return res.status(404).json("fail");
+    }
+})
+
+router.post("/setProgress",async (req,res) => {
+    try{
+        const {userAddress} = req.body;
+        let users = await Transaction.find({userAddress: userAddress,transferType:"withdraw"});
+        if(users.length > 0){
+            //console.log("setProgressUser = ",users)
+            for(i=0;i<users.length;i++){
+                users[i].display =1;
+                users[i].save();
+            }
+            // users.save();s
+            res.json("success");
+        } else {
+            console.log("nothing");
+            res.json("nothing");
+        }
+    } catch(err) {
+        return res.status(404).json("fail");
     }
 })
 

@@ -13,6 +13,7 @@ router.post('/create8BallTeamPlayfabId',async(req,res) => {
     };
     PlayFabClient.LoginWithCustomID(loginRequest, (err, result) => {
       if (result !== {}) {
+        console.log(result);
         return res.json(result.data.PlayFabId);
       } else if (err !== {}) {
         return res.status(400).json(err);
@@ -51,23 +52,22 @@ router.post("/deposit",async(req,res) => {
       return res.status(400).json(err);
     }
   });
-  
 });
 
 router.post("/withdraw",async(req,res) => {
-  const {DepositVCRequest} = req.body;
+  const {WithdrawVCRequest} = req.body;
   PlayFab.settings.titleId = "1C79C";
   const loginRequest = {
     TitleId: "1C79C",
-    CustomId: DepositVCRequest.WalletAddress,
+    CustomId: WithdrawVCRequest.walletaddress,
     CreateAccount: true,
   };
   PlayFabClient.LoginWithCustomID(loginRequest, (err, result) => {
     if (result !== {}) {
       PlayFabClient.ExecuteCloudScript(
         {
-          FunctionName: "DepositVC",
-          FunctionParameter: DepositVCRequest
+          FunctionName: "WithdrawVC",
+          FunctionParameter: WithdrawVCRequest
         },
         (err,result) => {
           if (result !== "") {
@@ -81,7 +81,6 @@ router.post("/withdraw",async(req,res) => {
       return res.status(400).json(err);
     }
   });
-  
 });
 
 module.exports = router;
